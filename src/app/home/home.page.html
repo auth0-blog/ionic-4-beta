@@ -1,12 +1,24 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>
-      Ionic Blank
+      People
     </ion-title>
+    <ion-buttons slot="end">
+      <ion-button shape="round" fill="outline" color="light" (click)="authService.login()" *ngIf="!authService.isLoggedIn">Login</ion-button>
+      <ion-button shape="round" fill="outline" color="light" (click)="authService.logout()" *ngIf="authService.isLoggedIn">Logout</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
-  The world is your oyster.
-  <p>If you get lost, the <a target="_blank" rel="noopener" href="https://ionicframework.com/docs">docs</a> will be your guide.</p>
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let person of people; let i = index" (click)="openPerson(i)">
+      <ion-avatar slot="start">
+        <img [src]="person.picture.thumbnail" />
+      </ion-avatar>
+      <ion-label>
+        <h2>{{ person.name?.title | capitalize }} {{ person.name?.first | capitalize }} {{person.name?.last | capitalize }}</h2>
+      </ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>
