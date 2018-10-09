@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Person</ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/home" routerDirection="root">Switch User</ion-button>
+      <ion-button shape="round" fill="outline" color="light"  (click)="authService.login()" *ngIf="!authService.isLoggedIn">Login</ion-button>
+      <ion-button shape="round" fill="outline" color="light"  (click)="authService.logout()" *ngIf="authService.isLoggedIn">Logout</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card *ngIf="person">
+    <ion-img [src]="person.picture?.large"></ion-img>
+
+    <ion-card-content>
+      <ion-card-title>{{ person.name?.title | capitalize }} {{ person.name?.first | capitalize }} {{ person.name?.last | capitalize }}</ion-card-title>
+      <div padding *ngIf="!authService.isLoggedIn">
+        <ion-button color="secondary" shape="round" fill="outline" (click)="authService.login()">Login to See More Detail</ion-button>
+      </div>
+      <div padding [hidden]="!authService.isLoggedIn">
+        <ion-item icon-left>
+          <span ngClass="flag-icon flag-icon-{{person.nat | lowercase}}"></span>
+          <ion-icon slot="start" [name]="person.gender"></ion-icon>
+        </ion-item>
+        <ion-item icon-left>
+          <ion-icon slot="start" name="call"></ion-icon>
+          {{ person.phone }}
+        </ion-item>
+        <ion-item text-wrap>
+          <ion-icon slot="start" name="mail"></ion-icon>
+          {{ person.email }}
+        </ion-item>
+        <ion-button color="secondary" shape="round" fill="outline" (click)="authService.logout()">Logout</ion-button>
+      </div>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
